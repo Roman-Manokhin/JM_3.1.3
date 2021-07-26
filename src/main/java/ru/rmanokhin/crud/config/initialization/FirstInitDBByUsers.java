@@ -3,7 +3,6 @@ package ru.rmanokhin.crud.config.initialization;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ru.rmanokhin.crud.model.Role;
-import ru.rmanokhin.crud.model.UserInfo;
 import ru.rmanokhin.crud.model.UserSecurity;
 import ru.rmanokhin.crud.service.RoleService;
 import ru.rmanokhin.crud.service.UserSecurityService;
@@ -31,32 +30,23 @@ public class FirstInitDBByUsers {
         roleService.addRole(user);
         Role admin = new Role("ROLE_ADMIN");
         roleService.addRole(admin);
-        UserInfo userInfoUser = new UserInfo("user", "user", "user@mail.ru");
-        UserInfo userInfoUser1 = new UserInfo("user1", "user1", "user1@mail.ru");
-        UserInfo userInfoUser2 = new UserInfo("user2", "user2", "user2@mail.ru");
-        UserInfo userInfoAdmin = new UserInfo("admin", "admin", "admin@mail.ru");
 
-
-        UserSecurity userUser = new UserSecurity("USER", "USER");
+        UserSecurity userUser = new UserSecurity("USER", "USER", "user", "user", "user@mail.ru");
         Set<Role> roleUser = new HashSet<>();
         roleUser.add(user);
         userUser.setRoles(roleUser);
-        userUser.setUserInfo(userInfoUser);
 
-        UserSecurity userUser1 = new UserSecurity("USER1", "USER1");
+        UserSecurity userUser1 = new UserSecurity("USER1", "USER1", "user1", "user1", "user1@mail.ru");
         userUser1.setRoles(roleUser);
-        userUser1.setUserInfo(userInfoUser1);
 
-        UserSecurity userUser2 = new UserSecurity("USER2", "USER2");
+        UserSecurity userUser2 = new UserSecurity("USER2", "USER2", "user1", "user2", "user2@mail.ru");
         userUser2.setRoles(roleUser);
-        userUser2.setUserInfo(userInfoUser2);
 
         Set<Role> roleAdmin = new HashSet<>();
         roleAdmin.add(user);
         roleAdmin.add(admin);
-        UserSecurity userAdmin = new UserSecurity("ADMIN", "ADMIN");
+        UserSecurity userAdmin = new UserSecurity("ADMIN", "ADMIN", "admin", "admin", "admin@mail.ru");
         userAdmin.setRoles(roleAdmin);
-        userAdmin.setUserInfo(userInfoAdmin);
 
         userSecurityService.addUser(userUser);
         userSecurityService.addUser(userUser1);

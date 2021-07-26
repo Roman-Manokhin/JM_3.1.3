@@ -1,44 +1,43 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://thymeleaf.org">
 <head>
-  <meta charset="UTF-8">
-  <title>All Users</title>
+    <meta charset="UTF-8">
+    <title>All Users</title>
 </head>
 <body>
 <h2> All users </h2>
 <br>
-<br>
 <table border="3">
-  <tr>
-    <th>ID</th>
-    <th>Name</th>
-    <th>Last name</th>
-    <th>Email</th>
-    <th>Login</th>
-    <th>Edit</th>
-    <th>Delete</th>
-  </tr>
-  <tr th:each="user : ${allUsers}">
-    <td th:text="${user.getUserInfo().getId()}">id</td>
-    <td th:text="${user.getUserInfo().getName()}">name</td>
-    <td th:text="${user.getUserInfo().getLastName()}">lastname</td>
-    <td th:text="${user.getUserInfo().getEmail()}">email</td>
-    <td th:text="${user.getLogin()}">login</td>
-    <td>
-      <form th:action="@{/admin/update/{id}(id=${user.getId()})}">
-        <input type="submit" value="Edit">
-      </form>
-    </td>
-    <td>
-      <form th:method="delete" th:action="@{/remove/{id}(id=${user.getId()})}">
-        <input type="submit" value="Delete">
-      </form>
-    </td>
-  </tr>
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Last name</th>
+        <th>Email</th>
+        <th>Login</th>
+        <th>Edit</th>
+        <th>Delete</th>
+    </tr>
+    <tr th:each="user : ${allUsers}">
+        <td th:text="${user.getId()}">id</td>
+        <td th:text="${user.getName()}">name</td>
+        <td th:text="${user.getLastName()}">lastname</td>
+        <td th:text="${user.getEmail()}">email</td>
+        <td th:text="${user.getLogin()}">login</td>
+        <td>
+            <form th:action="@{/admin/update/{id}(id=${user.getId()})}">
+                <input type="submit" value="Edit">
+            </form>
+        </td>
+        <td>
+            <form th:method="delete" th:action="@{/remove/{id}(id=${user.getId()})}">
+                <input type="submit" value="Delete">
+            </form>
+        </td>
+    </tr>
 </table>
 <br>
 <form action="/admin/new">
-  <input type="submit" value="Add new USER">
+    <input type="submit" value="Add new USER">
 </form>
 <br>
 <h3><a href="/logout">Logout</a></h3>

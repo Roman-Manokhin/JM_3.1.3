@@ -10,13 +10,13 @@
 <br>
 <form th:method="put" th:action="@{/admin/{id}(id=${user.getId()})}" th:object="${user}">
     <label>Name</label>
-    <input type="text" th:value="${user.getUserInfo().getName()}" th:name="Name"/>
+    <input type="text" th:value="${user.getName()}" th:name="Name"/>
     <br>
     <label>Last name</label>
-    <input type="text" th:value="${user.getUserInfo().getLastName()}"th:name="LastName"/>
+    <input type="text" th:value="${user.getLastName()}"th:name="LastName"/>
     <br>
     <label>Email</label>
-    <input type="text" th:value="${user.getUserInfo().getEmail()}"th:name="Email"/>
+    <input type="text" th:value="${user.getEmail()}"th:name="Email"/>
     <br>
     <label>Login</label>
     <input type="text" th:value="${user.getLogin()}"th:name="login"/>
@@ -25,7 +25,7 @@
     <input type="text" th:value="${user.getUserPassword()}"th:name="userPassword"/>
     <br>
     <label>ROLE_USER</label>
-    <input type="checkbox" th:checked="checked" value="ROLE_USER" th:name="checkBoxRoles"/>
+    <input type="checkbox" th:checked="checkbox" value="ROLE_USER" th:name="checkBoxRoles"/>
     <br>
     <label>ROLE_ADMIN</label>
     <input type="checkbox"  value="ROLE_ADMIN" th:name="checkBoxRoles"/>
@@ -34,6 +34,5 @@
 </form>
 <br>
 <h3><a href="/logout">Logout</a></h3>
-
 </body>
 </html>
