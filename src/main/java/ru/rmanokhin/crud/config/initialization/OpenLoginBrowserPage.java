@@ -10,7 +10,7 @@ public class OpenLoginBrowserPage {
     @EventListener(ApplicationReadyEvent.class)
     public void EventListener() {
 
-        String url = "http://localhost:8080/login";
+        String url = "http://localhost:8080/";
         String os = System.getProperty("os.name").toLowerCase(); // получаем имя операционной системы
         Runtime rt = Runtime.getRuntime();
         try {

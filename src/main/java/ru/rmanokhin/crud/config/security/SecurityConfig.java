@@ -33,16 +33,23 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/").permitAll()
-                .antMatchers("/admin/**").hasRole("ADMIN")
-                .antMatchers("/user/**").hasAnyAuthority("ROLE_USER", "ROLE_ADMIN")
-                .and()
-                .formLogin()
-                .successHandler(successUserHandler)
-                .and()
-                .logout()
+                .antMatchers("/admin/**").hasAuthority("ADMIN")
+                .antMatchers("/user/**").hasAnyAuthority("USER", "ADMIN");
+
+        http.formLogin()
+                .loginPage("/")
+                .loginProcessingUrl("/")
+                .usernameParameter("email")
+                .passwordParameter("userPassword")
+                .successHandler(successUserHandler).permitAll();
+
+        http.logout()
                 .logoutUrl("/logout")
-                .logoutSuccessUrl("/login");
+                .clearAuthentication(true)
+                .invalidateHttpSession(true)
+                .deleteCookies("JSESSIONID")
+                .logoutSuccessUrl("/?logout")
+                .permitAll();
     }
 
     @Override

@@ -24,28 +24,32 @@ public class FirstInitDBByUsers {
     }
 
     @PostConstruct
-    public void initDB(){
+    public void initDB() {
 
-        Role user = new Role("ROLE_USER");
+        Role user = new Role("USER");
         roleService.addRole(user);
-        Role admin = new Role("ROLE_ADMIN");
+        Role admin = new Role("ADMIN");
         roleService.addRole(admin);
 
-        UserSecurity userUser = new UserSecurity("USER", "USER", "user", "user", "user@mail.ru");
+        UserSecurity userUser = new UserSecurity("user@mail.ru", "user",
+                "user", "user", (byte) 24);
         Set<Role> roleUser = new HashSet<>();
         roleUser.add(user);
         userUser.setRoles(roleUser);
 
-        UserSecurity userUser1 = new UserSecurity("USER1", "USER1", "user1", "user1", "user1@mail.ru");
+        UserSecurity userUser1 = new UserSecurity("user1@mail.ru", "user",
+                "user1", "user1", (byte) 25);
         userUser1.setRoles(roleUser);
 
-        UserSecurity userUser2 = new UserSecurity("USER2", "USER2", "user1", "user2", "user2@mail.ru");
+        UserSecurity userUser2 = new UserSecurity("user2@mail.ru", "user",
+                "user1", "user2", (byte) 35);
         userUser2.setRoles(roleUser);
 
         Set<Role> roleAdmin = new HashSet<>();
         roleAdmin.add(user);
         roleAdmin.add(admin);
-        UserSecurity userAdmin = new UserSecurity("ADMIN", "ADMIN", "admin", "admin", "admin@mail.ru");
+        UserSecurity userAdmin = new UserSecurity("admin@mail.ru", "admin",
+                "admin", "admin", (byte) 30);
         userAdmin.setRoles(roleAdmin);
 
         userSecurityService.addUser(userUser);

@@ -25,6 +25,12 @@ public class UserController {
         this.userSecurityService = userSecurityService;
     }
 
+    @GetMapping(value = "/")
+    public String login(@RequestParam(value = "error", required = false) String error, Model model) {
+        model.addAttribute("error", error != null);
+        return "login";
+    }
+
     @GetMapping(value = "/user")
     public String getUserInfo(@AuthenticationPrincipal UserSecurity user, Model model) {
         model.addAttribute("user", user);
@@ -34,45 +40,36 @@ public class UserController {
 
     @GetMapping(value = "/admin")
     public String getAllUsers(@AuthenticationPrincipal UserSecurity user, Model model) {
-        model.addAttribute("userSecurity", user);
+        model.addAttribute("user", user);
         model.addAttribute("roles", user.getRoles());
         model.addAttribute("allUsers", userSecurityService.getAllUsers());
-        return "admin_info";
+        return "admin_panel";
     }
 
     @GetMapping(value = "/admin/new")
-    public String newUser(Model model) {
+    public String newUser(@AuthenticationPrincipal UserSecurity user, Model model) {
         model.addAttribute("user", new UserSecurity());
-        model.addAttribute("roles", roleService.getAllRole());
+        model.addAttribute("user", user);
         return "new";
     }
 
-    @GetMapping(value = "/admin/update/{id}")
-    public String editUser(@PathVariable("id") long id, Model model) {
-        model.addAttribute("user", userSecurityService.getUserById(id));
-        model.addAttribute("role", roleService.getAllRole());
-        return "update";
-    }
-
     @PostMapping(value = "/admin/add")
-    private String addUser(@ModelAttribute UserSecurity user,
-                           @RequestParam(value = "checkBoxRoles") String[] checkBoxes) {
+    private String addUser(@ModelAttribute UserSecurity user, @RequestParam(value = "checkBoxRoles") String[] checkBoxRoles) {
         Set<Role> roles = new HashSet<>();
-        for (String role : checkBoxes) {
-            roles.add(roleService.getRoleByLogin(role));
+        for (String role : checkBoxRoles) {
+            roles.add(roleService.getRoleByName(role));
         }
         user.setRoles(roles);
         userSecurityService.addUser(user);
         return "redirect:/admin";
     }
 
-    @PutMapping(value = "/admin/{id}")
+    @PutMapping(value = "/admin/update")
     public String updateUser(@ModelAttribute UserSecurity user,
                              @RequestParam(value = "checkBoxRoles") String[] checkBoxRoles) {
-
         Set<Role> roles = new HashSet<>();
         for (String role : checkBoxRoles) {
-            roles.add(roleService.getRoleByLogin(role));
+            roles.add(roleService.getRoleByName(role));
         }
         user.setRoles(roles);
         userSecurityService.updateUser(user);

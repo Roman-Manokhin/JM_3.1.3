@@ -7,7 +7,6 @@ import ru.rmanokhin.crud.model.UserSecurity;
 
 public interface UserSecurityDAO extends JpaRepository<UserSecurity, Long> {
 
-    @Query("SELECT u FROM UserSecurity u WHERE u.login = :login")
-    UserSecurity findUserByName(@Param("login") String name);
+    UserSecurity findByEmail(String name);
 
 }

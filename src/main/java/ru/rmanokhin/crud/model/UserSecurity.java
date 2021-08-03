@@ -24,8 +24,8 @@ public class UserSecurity implements UserDetails {
     private Long id;
 
     @NonNull
-    @Column(name = "login", unique = true)
-    private String login;
+    @Column(name = "email")
+    private String email;
 
     @NonNull
     @Column(name = "password")
@@ -40,8 +40,8 @@ public class UserSecurity implements UserDetails {
     private String lastName;
 
     @NonNull
-    @Column(name = "email")
-    private String email;
+    @Column(name = "age")
+    private Byte age;
 
     @ManyToMany(cascade=CascadeType.MERGE, fetch = FetchType.LAZY)
     @JoinTable(name = "user_roles",
@@ -61,7 +61,7 @@ public class UserSecurity implements UserDetails {
 
     @Override
     public String getUsername() {
-        return getLogin();
+        return getEmail();
     }
 
     @Override

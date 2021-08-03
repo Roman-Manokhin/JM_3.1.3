@@ -22,19 +22,19 @@ public class RoleServiceImpl implements RoleService{
        roleDAO.save(role);
     }
 
-    @Override
-    public List<Role> getAllRole() {
-        return roleDAO.findAll();
-    }
+//    @Override
+//    public List<Role> getAllRole() {
+//        return roleDAO.findAll();
+//    }
+//
+//    @Override
+//    public void updateRole(Role role) {
+//        roleDAO.save(role);
+//    }
 
     @Override
-    public void updateRole(Role role) {
-        roleDAO.save(role);
-    }
-
-    @Override
-    public Role getRoleByLogin(String login) {
-        return roleDAO.findRoleByLogin(login);
+    public Role getRoleByName(String login) {
+        return roleDAO.findByName(login);
     }
 
 }

@@ -4,9 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 import ru.rmanokhin.crud.DAO.UserSecurityDAO;
 import ru.rmanokhin.crud.model.UserSecurity;
 
+import javax.security.auth.login.LoginException;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Service
@@ -26,7 +29,7 @@ public class UserSecurityServiceImpl implements UserSecurityService{
 
     @Override
     public UserSecurity getUserByLogin(String name) {
-        return userSecurityDAO.findUserByName(name);
+        return userSecurityDAO.findByEmail(name);
     }
 
     @Override
@@ -51,10 +54,11 @@ public class UserSecurityServiceImpl implements UserSecurityService{
     }
 
     @Override
-    public void updateUser(UserSecurity userSecurity) {
-        if (!userSecurity.getUserPassword().equals(getUserById(userSecurity.getId()).getUserPassword())) {
-            userSecurity.setUserPassword(getPasswordEncoder().encode(userSecurity.getUserPassword()));
+    public void updateUser(UserSecurity user) {
+        if (!user.getUserPassword().equals(getUserById(user.getId()).getUserPassword())) {
+            user.setUserPassword(getPasswordEncoder().encode(user.getUserPassword()));
         }
-        userSecurityDAO.save(userSecurity);
+        userSecurityDAO.save(user);
     }
+
 }

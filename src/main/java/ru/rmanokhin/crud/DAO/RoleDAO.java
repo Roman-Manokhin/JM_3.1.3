@@ -7,7 +7,6 @@ import ru.rmanokhin.crud.model.Role;
 
 public interface RoleDAO extends JpaRepository<Role, Long> {
 
-    @Query("SELECT r FROM Role r WHERE r.name = :login")
-    Role findRoleByLogin(@Param("login") String name);
+    Role findByName(String name);
 
 }
