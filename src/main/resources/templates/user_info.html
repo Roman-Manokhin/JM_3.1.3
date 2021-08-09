@@ -1,6 +1,7 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<html lang="ru"
+      xmlns:sec="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -8,32 +9,42 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
-    <style>
-        html,
-        body {
-            height: 100%;
-        }
+<!--    <style>-->
+<!--        html,-->
+<!--        body {-->
+<!--            height: 100%;-->
+<!--        }-->
 
-        .container-fluid {
-            flex: 1;
-        }
+<!--        .container-fluid {-->
+<!--            flex: 1;-->
+<!--        }-->
 
-        .row {
-            height: 100%;
-        }
+<!--        .row {-->
+<!--            height: 100%;-->
+<!--        }-->
 
-        div.fix_block {
-            width: 255px;
-            position: fixed;
-            top: 75px;
-            left: -5px;
-        }
+<!--        .flex-grow-1 {-->
+<!--            width: 80%;-->
+<!--        }-->
 
-    </style>
+<!--        div.fix_block {-->
+<!--            width: 257px;-->
+<!--            position: fixed;-->
+<!--            top: 75px;-->
+<!--            left: -2px;-->
+<!--        }-->
+
+<!--        .form-control {-->
+<!--            margin-left: auto;-->
+<!--            margin-right: auto;-->
+<!--            width: 200px-->
+<!--        }-->
+
+<!--    </style>-->
     <link rel="shortcut icon" href="/icon.png" type="image/png">
     <title>User page</title>
 </head>
-<body class="bg-light">
+<body>
 <nav class="navbar navbar-dark bg-dark fixed-top d-flex justify-content-between">
             <span>
                 <span class="navbar-brand font-weight-bold" th:text="${user.getEmail}"></span>
@@ -46,64 +57,56 @@
         </li>
     </ul>
 </nav>
-
-<div class="container-fluid" style="height: 100%">
-    <div class="row flex-fill d-flex justify-content-start">
-        <nav class="col-2 bg-white">
-            <br><br><br>
-            <div class="fix_block">
-                <ul class="nav flex-column nav-pills">
-                    <div sec:authorize="hasAuthority('ADMIN')">
-                        <li class="nav-item">
-                            <a class="nav-link" href="/admin">Admin</a>
-                        </li>
-                    </div>
-                    <li class="nav-item">
-                        <a class="nav-link active" href="/user">User</a>
-                    </li>
-                </ul>
+<br><br><br>
+<div class="row no-gutters vh-100">
+    <div class="col-md-2 bg-white">
+        <ul class="nav flex-column nav-pills">
+            <div sec:authorize="hasAuthority('ADMIN')">
+                <li class="nav-item">
+                    <a class="nav-link" href="/admin">Admin</a>
+                </li>
             </div>
-        </nav>
+            <li class="nav-item">
+                <a class="nav-link active" href="/user">User</a>
+            </li>
+        </ul>
+    </div>
+    <div class="col-md-10 bg-light">
+        <div class="container-fluid">
+            <div class="h1 mt-3">User information-page</div>
 
-        <div class="flex-grow-1 bg-light p-3">
-            <br><br><br>
-            <div class="container text-left">
-                <h1>User information-page</h1>
-                <div class="card bg-white">
-                    <h5 class="card-header">About user</h5>
-                    <div class="card-body">
-                        <table class="table table-light table-striped">
-                            <thead>
-                            <tr>
-                                <th scope="col">ID</th>
-                                <th scope="col">First Name</th>
-                                <th scope="col">Last Name</th>
-                                <th scope="col">Age</th>
-                                <th scope="col">Email</th>
-                                <th scope="col">Role</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr class="border-top bg-light">
-                                <td th:text="${user.getId()}"></td>
-                                <td th:text="${user.getName()}"></td>
-                                <td th:text="${user.getLastName()}"></td>
-                                <td th:text="${user.getAge()}"></td>
-                                <td th:text="${user.getEmail()}"></td>
-                                <td>
-                                    <span th:each="role : ${user.getRoles()}" th:text="${role} + ' '"></span>
-                                </td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
+            <div class="col-md bg-light border">
+                <h4 class=" mt-2 mb-3">About user</h4>
+            </div>
+            <div class="col-md bg-white border">
+                <table class="table table-light table-striped">
+                    <thead>
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">First Name</th>
+                        <th scope="col">Last Name</th>
+                        <th scope="col">Age</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Role</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr class="border-top bg-light">
+                        <td th:text="${user.getId()}"></td>
+                        <td th:text="${user.getName()}"></td>
+                        <td th:text="${user.getLastName()}"></td>
+                        <td th:text="${user.getAge()}"></td>
+                        <td th:text="${user.getEmail()}"></td>
+                        <td>
+                            <span th:each="role : ${user.getRoles()}" th:text="${role} + ' '"></span>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
 </div>
-<!--</div>-->
-
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
         integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
         crossorigin="anonymous"></script>
@@ -115,4 +118,3 @@
         crossorigin="anonymous"></script>
 </body>
 </html>
-

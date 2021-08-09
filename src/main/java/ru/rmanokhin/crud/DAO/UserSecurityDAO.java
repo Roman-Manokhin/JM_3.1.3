@@ -1,12 +1,10 @@
 package ru.rmanokhin.crud.DAO;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
-import ru.rmanokhin.crud.model.UserSecurity;
+import ru.rmanokhin.crud.model.User;
 
-public interface UserSecurityDAO extends JpaRepository<UserSecurity, Long> {
+public interface UserSecurityDAO extends JpaRepository<User, Long> {
 
-    UserSecurity findByEmail(String name);
+    User findByEmail(String name);
 
 }

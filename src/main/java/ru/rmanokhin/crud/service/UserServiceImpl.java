@@ -4,16 +4,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.ui.Model;
 import ru.rmanokhin.crud.DAO.UserSecurityDAO;
-import ru.rmanokhin.crud.model.UserSecurity;
+import ru.rmanokhin.crud.model.User;
 
-import javax.security.auth.login.LoginException;
-import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Service
-public class UserSecurityServiceImpl implements UserSecurityService{
+public class UserServiceImpl implements UserService {
 
     private final UserSecurityDAO userSecurityDAO;
 
@@ -23,28 +20,28 @@ public class UserSecurityServiceImpl implements UserSecurityService{
     }
 
     @Autowired
-    public UserSecurityServiceImpl(UserSecurityDAO userSecurityDAO) {
+    public UserServiceImpl(UserSecurityDAO userSecurityDAO) {
         this.userSecurityDAO = userSecurityDAO;
     }
 
     @Override
-    public UserSecurity getUserByLogin(String name) {
+    public User getUserByLogin(String name) {
         return userSecurityDAO.findByEmail(name);
     }
 
     @Override
-    public void addUser(UserSecurity userSecurity) {
-        userSecurity.setUserPassword(getPasswordEncoder().encode(userSecurity.getUserPassword()));
-        userSecurityDAO.save(userSecurity);
+    public void addUser(User user) {
+        user.setUserPassword(getPasswordEncoder().encode(user.getUserPassword()));
+        userSecurityDAO.save(user);
     }
 
     @Override
-    public List<UserSecurity> getAllUsers() {
+    public List<User> getAllUsers() {
         return userSecurityDAO.findAll();
     }
 
     @Override
-    public UserSecurity getUserById(long id) {
+    public User getUserById(long id) {
         return userSecurityDAO.getById(id);
     }
 
@@ -54,7 +51,7 @@ public class UserSecurityServiceImpl implements UserSecurityService{
     }
 
     @Override
-    public void updateUser(UserSecurity user) {
+    public void updateUser(User user) {
         if (!user.getUserPassword().equals(getUserById(user.getId()).getUserPassword())) {
             user.setUserPassword(getPasswordEncoder().encode(user.getUserPassword()));
         }

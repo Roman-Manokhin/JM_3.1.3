@@ -7,37 +7,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="shortcut icon" href="/icon.png" type="image/png">
-    <style>
-        html,
-        body {
-            height: 100%;
-        }
 
-        .container-fluid {
-            flex: 1;
-        }
-
-        .container {
-            min-width: 1250px;
-        }
-
-        .row {
-            height: 100%;
-        }
-
-        div.fix_block {
-            width: 257px;
-            position: fixed;
-            top: 75px;
-            left: -2px;
-        }
-
-        .form-control {
-            margin-left: auto;
-            margin-right: auto;
-            width: 200px
-        }
-    </style>
     <title>Admin panel</title>
 </head>
 <body class="bg-light">
@@ -54,40 +24,36 @@
     </ul>
 </nav>
 
-<div class="container-fluid" style="height: 100%">
-    <div class="row flex-fill d-flex justify-content-start">
-        <nav class="col-2 bg-white">
-            <br><br><br>
-            <div class="fix_block">
-                <ul class="nav flex-column nav-pills">
-                    <li class="nav-item">
-                        <a class="nav-link active" href="/admin">Admin</a>
-                    </li>
-                </ul>
-                <ul class="nav flex-column nav-pills">
-                    <li class="nav-item">
-                        <a class="nav-link" href="/user">User</a>
-                    </li>
-                </ul>
-            </div>
-        </nav>
 
-        <div class="flex-grow-1 bg-light p-3">
-            <br><br><br>
-            <div class="container text-left">
-                <h1>Admin panel</h1>
-                <ul class="nav nav-tabs">
-                    <li class="nav-item">
-                        <a class="nav-link" href="/admin">Users table</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link active" href="/admin/new">New User</a>
-                    </li>
-                </ul>
+<br><br><br>
+<div class="row no-gutters vh-100">
+    <div class="col-md-2 bg-white">
+        <ul class="nav flex-column nav-pills">
+            <div sec:authorize="hasAuthority('ADMIN')">
+                <li class="nav-item">
+                    <a class="nav-link active" href="/admin">Admin</a>
+                </li>
+            </div>
+            <li class="nav-item">
+                <a class="nav-link" href="/user">User</a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="col-md-10 bg-light">
+        <div class="container-fluid">
+            <div class="h1 mt-3">Admin panel</div>
+            <ul class="nav nav-tabs">
+                <li class="nav-item">
+                    <a class="nav-link" href="/admin">Users table</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="/admin/new">New User</a>
+                </li>
+            </ul>
 
                 <div class="card bg-white">
                     <h5 class="card-header">Add new user</h5>
-                    <!--                    <div class="row justify-content-center align-items-center">-->
                     <div class="card-body">
                         <form th:action="@{/admin/add}" th:object="${user}" method="post">
                             <div class="card_height">
