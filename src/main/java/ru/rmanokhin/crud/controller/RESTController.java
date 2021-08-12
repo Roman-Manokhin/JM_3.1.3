@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.*;
 import ru.rmanokhin.crud.model.User;
 import ru.rmanokhin.crud.service.UserService;
 
-import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -32,12 +31,12 @@ public class RESTController {
     }
 
     @PostMapping("/users")
-    public ResponseEntity<User> insert(@Valid @RequestBody User user) {
+    public ResponseEntity<User> insert(@RequestBody User user) {
         return ResponseEntity.ok(userService.addUser(user));
     }
 
     @PutMapping("/users")
-    public ResponseEntity<User> update(@Valid @RequestBody User user) {
+    public ResponseEntity<User> update(@RequestBody User user) {
         return ResponseEntity.ok(userService.updateUser(user));
     }
 
