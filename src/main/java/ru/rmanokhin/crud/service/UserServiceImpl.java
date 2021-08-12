@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import ru.rmanokhin.crud.DAO.UserSecurityDAO;
+import ru.rmanokhin.crud.DAO.UserDAO;
 import ru.rmanokhin.crud.model.User;
 
 import java.util.List;
@@ -12,50 +12,49 @@ import java.util.List;
 @Service
 public class UserServiceImpl implements UserService {
 
-    private final UserSecurityDAO userSecurityDAO;
+    private final UserDAO userDAO;
+
+    @Autowired
+    public UserServiceImpl(UserDAO userDAO) {
+        this.userDAO = userDAO;
+    }
 
     @Autowired
     PasswordEncoder getPasswordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
-    @Autowired
-    public UserServiceImpl(UserSecurityDAO userSecurityDAO) {
-        this.userSecurityDAO = userSecurityDAO;
-    }
-
-    @Override
-    public User getUserByLogin(String name) {
-        return userSecurityDAO.findByEmail(name);
-    }
-
-    @Override
-    public void addUser(User user) {
-        user.setUserPassword(getPasswordEncoder().encode(user.getUserPassword()));
-        userSecurityDAO.save(user);
-    }
-
     @Override
     public List<User> getAllUsers() {
-        return userSecurityDAO.findAll();
+        return userDAO.findAll();
+    }
+
+    @Override
+    public User addUser(User user) {
+        user.setPasswordUser(getPasswordEncoder().encode(user.getPasswordUser()));
+        return userDAO.save(user);
     }
 
     @Override
     public User getUserById(long id) {
-        return userSecurityDAO.getById(id);
+        return userDAO.findById(id).get();
     }
 
     @Override
     public void deleteUser(long id) {
-        userSecurityDAO.deleteById(id);
+        userDAO.deleteById(id);
     }
 
     @Override
-    public void updateUser(User user) {
-        if (!user.getUserPassword().equals(getUserById(user.getId()).getUserPassword())) {
-            user.setUserPassword(getPasswordEncoder().encode(user.getUserPassword()));
+    public User updateUser(User user) {
+        if (!user.getPasswordUser().equals(getUserById(user.getId()).getPasswordUser())) {
+            user.setPasswordUser(getPasswordEncoder().encode(user.getPasswordUser()));
         }
-        userSecurityDAO.save(user);
+        return userDAO.save(user);
     }
 
+    @Override
+    public User getUserByEmail(String email) {
+        return userDAO.findByEmail(email);
+    }
 }

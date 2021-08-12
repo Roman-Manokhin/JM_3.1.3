@@ -24,16 +24,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+
         http.csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/admin/**").hasAuthority("ADMIN")
+                .antMatchers("/api/**").hasAuthority("ADMIN")
                 .antMatchers("/user/**").hasAnyAuthority("USER", "ADMIN");
 
         http.formLogin()
                 .loginPage("/")
                 .loginProcessingUrl("/")
                 .usernameParameter("email")
-                .passwordParameter("userPassword")
+                .passwordParameter("passwordUser")
                 .successHandler(successUserHandler).permitAll();
 
         http.logout()

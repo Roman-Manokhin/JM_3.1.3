@@ -5,10 +5,10 @@ import ru.rmanokhin.crud.model.User;
 import java.util.List;
 
 public interface UserService {
-    User getUserByLogin(String name);
-    void addUser(User user);
     List<User> getAllUsers();
+    User addUser(User user);
     User getUserById(long id);
     void deleteUser(long id);
-    void updateUser(User user);
+    User updateUser(User user);
+    User getUserByEmail(String email);
 }

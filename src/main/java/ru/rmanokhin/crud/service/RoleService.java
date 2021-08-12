@@ -5,8 +5,9 @@ import ru.rmanokhin.crud.model.Role;
 import java.util.List;
 
 public interface RoleService {
+    List<Role> getAllRole();
     void addRole(Role role);
-//    List<Role> getAllRole();
-//    void updateRole(Role role);
-    Role getRoleByName(String login);
+    void updateRole(Role role);
+    void deleteRole(long id);
+    Role getRoleByName(String name);
 }

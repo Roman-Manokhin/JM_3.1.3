@@ -31,30 +31,18 @@ public class FirstInitDBByUsers {
         Role admin = new Role("ADMIN");
         roleService.addRole(admin);
 
-        User userUser = new User("user@mail.ru", "user",
-                "user", "user", (byte) 24);
+        User userUser = new User("user", "user", (byte) 24, "user@mail.ru", "user");
         Set<Role> roleUser = new HashSet<>();
         roleUser.add(user);
         userUser.setRoles(roleUser);
 
-        User userUser1 = new User("user1@mail.ru", "user",
-                "user1", "user1", (byte) 25);
-        userUser1.setRoles(roleUser);
-
-        User userUser2 = new User("user2@mail.ru", "user",
-                "user1", "user2", (byte) 35);
-        userUser2.setRoles(roleUser);
-
         Set<Role> roleAdmin = new HashSet<>();
         roleAdmin.add(user);
         roleAdmin.add(admin);
-        User userAdmin = new User("admin@mail.ru", "admin",
-                "admin", "admin", (byte) 30);
+        User userAdmin = new User("admin", "admin", (byte) 30, "admin@mail.ru", "admin");
         userAdmin.setRoles(roleAdmin);
 
         userService.addUser(userUser);
-        userService.addUser(userUser1);
-        userService.addUser(userUser2);
         userService.addUser(userAdmin);
 
     }

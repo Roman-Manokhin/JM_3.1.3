@@ -1,9 +1,6 @@
 package ru.rmanokhin.crud.model;
 
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -11,7 +8,8 @@ import javax.persistence.*;
 import java.util.Collection;
 import java.util.Set;
 
-@Data
+@Getter
+@Setter
 @Entity
 @NoArgsConstructor
 @RequiredArgsConstructor
@@ -24,16 +22,8 @@ public class User implements UserDetails {
     private Long id;
 
     @NonNull
-    @Column(name = "email")
-    private String email;
-
-    @NonNull
-    @Column(name = "password")
-    private String userPassword;
-
-    @NonNull
     @Column(name = "name")
-    private String name;
+    private String firstName;
 
     @NonNull
     @Column(name = "last_name")
@@ -42,6 +32,14 @@ public class User implements UserDetails {
     @NonNull
     @Column(name = "age")
     private Byte age;
+
+    @NonNull
+    @Column(name = "email")
+    private String email;
+
+    @NonNull
+    @Column(name = "password")
+    private String passwordUser;
 
     @ManyToMany(cascade=CascadeType.MERGE, fetch = FetchType.LAZY)
     @JoinTable(name = "user_roles",
@@ -56,7 +54,7 @@ public class User implements UserDetails {
 
     @Override
     public String getPassword() {
-        return getUserPassword();
+        return getPasswordUser();
     }
 
     @Override

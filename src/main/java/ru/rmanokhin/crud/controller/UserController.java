@@ -32,53 +32,17 @@ public class UserController {
     }
 
     @GetMapping(value = "/user")
-    public String getUserInfo(@AuthenticationPrincipal User user, Model model) {
+    public String getUserInfo(@AuthenticationPrincipal User user, Model model){
         model.addAttribute("user", user);
-        model.addAttribute("roles", user.getRoles());
         return "user_info";
     }
+
 
     @GetMapping(value = "/admin")
     public String getAllUsers(@AuthenticationPrincipal User user, Model model) {
         model.addAttribute("user", user);
-        model.addAttribute("roles", user.getRoles());
-        model.addAttribute("allUsers", userService.getAllUsers());
+        model.addAttribute("roles", roleService.getAllRole());
         return "admin-page";
     }
 
-    @GetMapping(value = "/admin/new")
-    public String newUser(@AuthenticationPrincipal User user, Model model) {
-        model.addAttribute("user", new User());
-        model.addAttribute("user", user);
-        return "new";
-    }
-
-    @PostMapping(value = "/admin/add")
-    private String addUser(@ModelAttribute User user, @RequestParam(value = "checkBoxRoles") String[] checkBoxRoles) {
-        Set<Role> roles = new HashSet<>();
-        for (String role : checkBoxRoles) {
-            roles.add(roleService.getRoleByName(role));
-        }
-        user.setRoles(roles);
-        userService.addUser(user);
-        return "redirect:/admin";
-    }
-
-    @PutMapping(value = "/admin/update")
-    public String updateUser(@ModelAttribute User user,
-                             @RequestParam(value = "checkBoxRoles") String[] checkBoxRoles) {
-        Set<Role> roles = new HashSet<>();
-        for (String role : checkBoxRoles) {
-            roles.add(roleService.getRoleByName(role));
-        }
-        user.setRoles(roles);
-        userService.updateUser(user);
-        return "redirect:/admin";
-    }
-
-    @DeleteMapping(value = "/remove/{id}")
-    public String deleteUser(@PathVariable("id") long id) {
-        userService.deleteUser(id);
-        return "redirect:/admin";
-    }
 }
